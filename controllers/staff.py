@@ -20,7 +20,7 @@ def get_staff(handler, staff_id):
 
 def create_staff(handler):
     data = parse_json_body(handler)
-    new_staff= service_create(data)
+    new_staff = service_create(data)
     return send_json(handler, 201, new_staff)
 
 def update_staff(handler, staff_id):

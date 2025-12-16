@@ -1,6 +1,5 @@
 from datetime import datetime
-import sqlite3
-from database.connection import get_connection
+from .connection import get_connection
 
 # ==================================================
 # BILLING QUERIES
@@ -8,17 +7,14 @@ from database.connection import get_connection
 
 def db_get_all():
     conn = get_connection()
-    conn.row_factory = sqlite3.Row
-    rows = conn.execute("SELECT * FROM billing ORDER BY id DESC").fetchall()
+    rows = conn.execute("SELECT * FROM billings ORDER BY id DESC").fetchall()
     conn.close()
     return [dict(r) for r in rows]
 
 
 def db_get_one(billing_id):
     conn = get_connection()
-    conn.row_factory = sqlite3.Row
-    row = conn.execute(
-        "SELECT * FROM billing WHERE id = ?",(billing_id)).fetchone()
+    row = conn.execute("SELECT * FROM billings WHERE id = ?",(billing_id,)).fetchone()
     conn.close()
     return dict(row) if row else None
 
@@ -27,8 +23,8 @@ def db_create(data):
     conn = get_connection()
     now = datetime.now().isoformat()
     cur = conn.execute(
-        "INSERT INTO billing (total_items, amount, created_at) VALUES (?, ?, ?)",
-        (data["total_items"], data["amount"], now)
+        "INSERT INTO billings (order_by, total_items, amount, created_at) VALUES (?, ?, ?, ?)",
+        (data["order_by"], data["total_items"], data["amount"], now)
     )
     conn.commit()
     new_id = cur.lastrowid
@@ -38,9 +34,10 @@ def db_create(data):
 
 def db_update(billing_id, data):
     conn = get_connection()
+    now = datetime.now().isoformat()
     conn.execute(
-        "UPDATE billing SET total_items=?, amount=? WHERE id=?",
-        (data["total_items"], data["amount"], billing_id)
+        "UPDATE billings SET order_by=?, total_items=?, amount=?, updated_at=? WHERE id=?",
+        (data["order_by"], data["total_items"], data["amount"], now, billing_id)
     )
     conn.commit()
     conn.close()
@@ -53,7 +50,7 @@ def db_delete(billing_id):
         return None
 
     conn = get_connection()
-    conn.execute("DELETE FROM billing WHERE id=?", (billing_id))
+    conn.execute("DELETE FROM billings WHERE id=?", (billing_id,))
     conn.commit()
     conn.close()
     return billing
@@ -64,49 +61,50 @@ def db_delete(billing_id):
 
 def db_get_all():
     conn = get_connection()
-    conn.row_factory = sqlite3.Row
-    rows = conn.execute("SELECT * FROM menu ORDER BY name ASC").fetchall()
+    rows = conn.execute("SELECT * FROM menus ORDER BY name ASC").fetchall()
     conn.close()
     return [dict(r) for r in rows]
 
 
-def db_get_one(name):
+def db_get_one(menu_name):
     conn = get_connection()
-    conn.row_factory = sqlite3.Row
-    row = conn.execute("SELECT * FROM menu WHERE name = ?", (name)).fetchone()
+    row = conn.execute("SELECT * FROM menus WHERE name = ?", (menu_name,)).fetchone()
     conn.close()
     return dict(row) if row else None
 
 
 def db_create(data):
     conn = get_connection()
-    conn.execute(
-        "INSERT INTO menu (name, price, rating) VALUES (?, ?, ?)",
-        (data["name"], data["price"], data["rating"])
+    now = datetime.now().isoformat()
+    cur = conn.execute(
+        "INSERT INTO menus (name, price, rating, created_at) VALUES (?, ?, ?, ?)",
+        (data["name"], data["price"], data["rating"], now)
     )
     conn.commit()
+    new_name = cur.lastrowid
     conn.close()
-    return db_get_one(data["name"])
+    return db_get_one(new_name)
 
 
-def db_update(name, data):
+def db_update(menu_name, data):
     conn = get_connection()
+    now = datetime.now().isoformat()
     conn.execute(
-        "UPDATE menu SET price=?, rating=? WHERE name=?",
-        (data["price"], data["rating"], name)
+        "UPDATE menus SET price=?, rating=?, updated_at=? WHERE name=?",
+        (data["price"], data["rating"], now, menu_name)
     )
     conn.commit()
     conn.close()
-    return db_get_one(name)
+    return db_get_one(menu_name)
 
 
-def db_delete(name):
-    menu = db_get_one(name)
+def db_delete(menu_name):
+    menu = db_get_one(menu_name)
     if not menu:
         return None
 
     conn = get_connection()
-    conn.execute("DELETE FROM menu WHERE name=?", (name))
+    conn.execute("DELETE FROM menus WHERE name=?", (menu_name,))
     conn.commit()
     conn.close()
     return menu
@@ -118,28 +116,24 @@ def db_delete(name):
 
 def db_get_all():
     conn = get_connection()
-    conn.row_factory = sqlite3.Row
-    rows = conn.execute("SELECT * FROM staff ORDER BY id DESC").fetchall()
+    rows = conn.execute("SELECT * FROM staffs ORDER BY id DESC").fetchall()
     conn.close()
     return [dict(r) for r in rows]
 
 
 def db_get_one(staff_id):
     conn = get_connection()
-    conn.row_factory = sqlite3.Row
-    row = conn.execute(
-        "SELECT * FROM staff WHERE id = ?",
-        (staff_id)
-    ).fetchone()
+    row = conn.execute("SELECT * FROM staffs WHERE id = ?", (staff_id,)).fetchone()
     conn.close()
     return dict(row) if row else None
 
 
 def db_create(data):
     conn = get_connection()
+    now = datetime.now().isoformat()
     cur = conn.execute(
-        "INSERT INTO staff (name, email, age) VALUES (?, ?, ?)",
-        (data["name"], data["email"], data["age"])
+        "INSERT INTO staffs (name, age, email, created_at) VALUES (?, ?, ?, ?)",
+        (data["name"], data["age"], data["email"], now)
     )
     conn.commit()
     new_id = cur.lastrowid
@@ -149,9 +143,10 @@ def db_create(data):
 
 def db_update(staff_id, data):
     conn = get_connection()
+    now = datetime.now().isoformat()
     conn.execute(
-        "UPDATE staff SET name=?, email=?, age=? WHERE id=?",
-        (data["name"], data["email"], data["age"], staff_id)
+        "UPDATE staffs SET name=?, age=?, email=?, updated_at=? WHERE id=?",
+        (data["name"], data["age"], data["email"], now, staff_id)
     )
     conn.commit()
     conn.close()
@@ -164,7 +159,7 @@ def db_delete(staff_id):
         return None
 
     conn = get_connection()
-    conn.execute("DELETE FROM staff WHERE id=?", (staff_id))
+    conn.execute("DELETE FROM staffs WHERE id=?", (staff_id,))
     conn.commit()
     conn.close()
     return staff

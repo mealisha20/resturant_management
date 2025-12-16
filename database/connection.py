@@ -2,39 +2,37 @@
 
 import sqlite3
 
-DB_FILE = "billing.db"
-DB_FILE = "menu.db"
-DB_FILE = "staff.db"
+DB_FILE = "restaurant.db"
 
 def get_connection():
     conn = sqlite3.connect(DB_FILE)
     conn.row_factory = sqlite3.Row
     return conn
 
+
 def init_database():
     conn = get_connection()
     conn.execute(""" 
-        CREATE TABLE IF NOT EXISTS billing (
-            Total items INTEGER,
+        CREATE TABLE IF NOT EXISTS billings (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            Amount INTEGER
+            order_by TEXT,
+            total items INTEGER,
+            amount INTEGER
             
         ) 
     """)
-def init_database():
-    conn = get_connection()
+
     conn.execute(""" 
-        CREATE TABLE IF NOT EXISTS menu (
+        CREATE TABLE IF NOT EXISTS menus (
             name TEXT,
             price INTEGER,
             rating INTEGER
             
         ) 
     """)
-def init_database():
-    conn = get_connection()
+
     conn.execute(""" 
-        CREATE TABLE IF NOT EXISTS staff (
+        CREATE TABLE IF NOT EXISTS staffs (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT,
             age INTEGER,     
