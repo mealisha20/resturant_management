@@ -48,6 +48,7 @@ curl -X GET "https://symmetrical-space-trout-jjvrjvxw7xvr35qr5-8000.app.github.d
 curl -X POST "https://symmetrical-space-trout-jjvrjvxw7xvr35qr5-8000.app.github.dev/api/menus" \
   -H "Content-Type: application/json" \
   -d '{ 
+    "Category": "veg",
     "name": "dalama",
     "price": "65",
     "rating": "4"
@@ -57,6 +58,7 @@ curl -X POST "https://symmetrical-space-trout-jjvrjvxw7xvr35qr5-8000.app.github.
 curl -X PUT "https://symmetrical-space-trout-jjvrjvxw7xvr35qr5-8000.app.github.dev/api/menus/1" \
   -H "Content-Type: application/json" \
   -d '{
+  "Category": "veg",
     "name": "dalama",
     "price": "60",
     "rating": "4"

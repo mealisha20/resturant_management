@@ -33,23 +33,23 @@ from core.responses import send_404
 from core.middleware import add_cors_headers
 
 
-# FRONTEND_ROUTES = {"/", "/home", "/billings", "/menus", "/staffs", "/docs"}
+FRONTEND_ROUTES = {"/", "/home", "/billings", "/menus", "/staffs", "/docs"}
 
-# def handle_ui_routes(handler, path):
-#     if path in FRONTEND_ROUTES:
-#         serve_static(handler, "frontend/pages/index.html")
-#         return True
+def handle_ui_routes(handler, path):
+    if path in FRONTEND_ROUTES:
+        serve_static(handler, "frontend/pages/index.html")
+        return True
 
-#     if path.endswith(".html"):
-#         stripped = path.replace(".html", "")
-#         if stripped in FRONTEND_ROUTES:
-#             serve_static(handler, "frontend/pages/index.html")
-#             return True
-#     if path.startswith("/frontend/"):
-#         serve_static(handler, path.lstrip("/"))
-#         return True
+    if path.endswith(".html"):
+        stripped = path.replace(".html", "")
+        if stripped in FRONTEND_ROUTES:
+            serve_static(handler, "frontend/pages/index.html")
+            return True
+    if path.startswith("/frontend/"):
+        serve_static(handler, path.lstrip("/"))
+        return True
 
-#     return False
+    return False
 
 
 class restaurantRouter(BaseHTTPRequestHandler):
@@ -63,8 +63,8 @@ class restaurantRouter(BaseHTTPRequestHandler):
     def do_GET(self):
         path = urlparse(self.path).path
 
-        # if handle_ui_routes(self, path):
-        #     return
+        if handle_ui_routes(self, path):
+            return
 # ==================================================
 # BILLING 
 # ==================================================
@@ -84,8 +84,8 @@ class restaurantRouter(BaseHTTPRequestHandler):
             return get_all_menus(self)
           
         if path.startswith("/api/menus/"):
-            menu_name = int(path.split("/")[-1])
-            return get_menu(self, menu_name)
+            menu_id = int(path.split("/")[-1])
+            return get_menu(self, menu_id)
              
 # ==================================================
 # staff
@@ -120,8 +120,8 @@ class restaurantRouter(BaseHTTPRequestHandler):
             return update_billing(self, billing_id)
         
         if self.path.startswith("/api/menus/"):
-            menu_name = int(self.path.split("/")[-1])
-            return update_menu(self, menu_name)
+            menu_id = int(self.path.split("/")[-1])
+            return update_menu(self, menu_id)
 
         if self.path.startswith("/api/staffs/"):
             staff_id = int(self.path.split("/")[-1])
@@ -136,8 +136,8 @@ class restaurantRouter(BaseHTTPRequestHandler):
             return delete_billing(self, billing_id)
         
         if self.path.startswith("/api/menus/"):
-             menu_name = int(self.path.split("/")[-1])
-             return delete_menu(self, menu_name)
+             menu_id = int(self.path.split("/")[-1])
+             return delete_menu(self, menu_id)
         
         if self.path.startswith("/api/staffs/"):
              staff_id = int(self.path.split("/")[-1])

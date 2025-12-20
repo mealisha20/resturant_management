@@ -14,8 +14,8 @@ from services.menu import (
 def get_all_menus(handler):
     return send_json(handler, 200, service_get_all())
 
-def get_menu(handler, menu_name):
-    menu = service_get_one(menu_name)
+def get_menu(handler, menu_id):
+    menu = service_get_one(menu_id)
     return send_json(handler, 200, menu) if menu else send_404(handler)
 
 def create_menu(handler):
@@ -23,12 +23,12 @@ def create_menu(handler):
     new_menu = service_create(data)
     return send_json(handler, 201, new_menu)
 
-def update_menu(handler, menu_name):
+def update_menu(handler, menu_id):
     data = parse_json_body(handler)
-    updated = service_update(menu_name, data)
+    updated = service_update(menu_id, data)
     return send_json(handler, 200, updated) if updated else send_404(handler)
 
-def delete_menu(handler, menu_name):
-    deleted = service_delete(menu_name)
+def delete_menu(handler, menu_id):
+    deleted = service_delete(menu_id)
     return send_json(handler, 200, {"deleted": True}) if deleted else send_404(handler)
 

@@ -4,43 +4,41 @@ import {
     apiCreate, 
     apiUpdate, 
     apiDelete 
-} from "../services/studentService.js";
+} from "../services/billingService.js";
 
  import { showAlert } from "../components/Alert.js";
-import { renderrestaurantTable } from "../components/STable.js";
-import { resetForm, fillForm } from "../components/StudentForm.js";
+import { renderBillingTable } from "../components/BillingTable.js";
+import { resetForm, fillForm } from "../components/BillingForm.js";
 
 import { setState, getState } from "../state/store.js";
 import { $, createElement } from "../utils/dom.js";
 
 // Setup event listeners and load initial data
 // Initialize the main logic and set up all necessary event listeners
-export function initStudentController() {
-  // Start by fetching and displaying all student data immediately upon load
-  loadStudents();
+export function initBillingController() {
+  // Start by fetching and displaying all Billing data immediately upon load
+  loadBillings();
 
   // --- Handle Form Submissions ---
 
-  // Attach a listener to the 'submit' event of the student input form
-  $("studentForm").addEventListener("submit", async (e) => {
+  // Attach a listener to the 'submit' event of the Billing input form
+  $("billingForm").addEventListener("submit", async (e) => {
     // Prevent the browser's default form submission behavior (page refresh)
     e.preventDefault();
 
     // Collect data from the input fields using the custom '$' selector
     const data = {
-      name: $("name").value.trim(),   // Get name value, remove whitespace
-      email: $("email").value.trim(), // Get email value
-      course: $("course").value.trim(), // Get course value
-      year: $("year").value.trim()    // Get year value
-    };
-
+      order_by: $("order_by").value.trim(), 
+      total_items: $("total_items").value.trim(), 
+      amount: $("amount").value.trim()  
+  };
     // Check the application state to see if we are currently editing an existing record
     const { editingId } = getState();
 
     // Use a ternary operator to decide which action to take:
     editingId
-      ? await updateStudent(editingId, data) // If editingId exists, update the student
-      : await createNewStudent(data);        // Otherwise, create a new student
+      ? await updateBilling(editingId, data) // If editingId exists, update the Billing
+      : await createNewBilling(data);        // Otherwise, create a new Billing
   });
 
   // --- Handle Cancel Button Click ---
@@ -55,23 +53,23 @@ export function initStudentController() {
 }
 
 
-// Fetch all student data from the API and update the user interface
-export async function loadStudents() {
+// Fetch all Billing data from the API and update the user interface
+export async function loadBillings() {
   // Get references to the loading spinner and the main data table elements
   const spinner = $("loadingSpinner");
-  const table = $("studentsTableContainer");
+  const table = $("billingsTableContainer");
 
   // Show the spinner and hide the table to indicate a loading state
   spinner.style.display = "block";
   table.style.display = "none";
 
-  // Asynchronously fetch all student records from the backend API
-  const students = await apiGetAll();
+  // Asynchronously fetch all Billing records from the backend API
+  const billings = await apiGetAll();
 
-  // Store the retrieved student array in the application's global state
-  setState({ students });
-  // Render the fetched student data into the HTML table structure
-  renderStudentTable(students);
+  // Store the retrieved Billing array in the application's global state
+  setState({ billings });
+  // Render the fetched Billing data into the HTML table structure
+  renderStudentTable(billings);
 
   // Hide the spinner and show the table now that the data is loaded and displayed
   spinner.style.display = "none";
@@ -79,44 +77,44 @@ export async function loadStudents() {
 }
 
 
-// Create a new student
-export async function createNewStudent(data) {
+// Create a new Billing
+export async function createNewBilling(data) {
   const res = await apiCreate(data);
   if (res.ok) {
-    showAlert("Student added!");
+    showAlert("Billing added!");
     resetForm();
-    loadStudents();
+    loadBillings();
   }
 }
 
-// Load a student into the form for editing
-export async function editStudent(id) {
-  const student = await apiGetOne(id);
+// Load a Billing into the form for editing
+export async function editBilling(id) {
+  const billing = await apiGetOne(id);
 
   setState({ editingId: id });
-  fillForm(student);
+  fillForm(billing);
 
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-// Update an existing student
-export async function updateStudent(id, data) {
+// Update an existing Billing
+export async function updateBilling(id, data) {
   const res = await apiUpdate(id, data);
   if (res.ok) {
     showAlert("Updated!");
     resetForm();
     setState({ editingId: null });
-    loadStudents();
+    loadBillings();
   }
 }
 
-// Delete a student
-export async function deleteStudentAction(id) {
-  if (!confirm("Delete this student?")) return;
+// Delete a Billing
+export async function deleteBillingAction(id) {
+  if (!confirm("Delete this billing?")) return;
 
   const res = await apiDelete(id);
  	if (res.ok) {
     showAlert("Deleted!");
-    loadStudents();
+    loadBillings();
   }
 }

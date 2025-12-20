@@ -26,7 +26,8 @@ def init_database():
 
     conn.execute(""" 
         CREATE TABLE IF NOT EXISTS menus (
-            no INTEGER PRIMARY KEY AUTOINCREMENT,
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            Category TEXT,
             name TEXT,
             price INTEGER,
             rating INTEGER,
