@@ -6,9 +6,9 @@ import {
     apiDelete 
 } from "../services/staffService.js";
 
- import { showAlert } from "../components/Alert.js";
-import { renderStaffTable } from "../components/StaffTable.js";
-import { resetForm, fillForm } from "../components/StaffForm.js";
+import { showAlert } from "../components/Alert.js";
+import { renderStaffTable } from "../components/Table/StaffTable.js";
+import { resetForm, fillForm } from "../components/Form/StaffForm.js";
 
 import { setState, getState } from "../state/store.js";
 import { $, createElement } from "../utils/dom.js";
@@ -31,7 +31,6 @@ export function initStaffController() {
       name: $("name").value.trim(),   // Get name value, remove whitespace
       email: $("email").value.trim(), // Get email value
       age: $("Age").value.trim(), // Get course value
-         // Get year value
     };
 
     // Check the application state to see if we are currently editing an existing record

@@ -6,9 +6,9 @@ import {
     apiDelete 
 } from "../services/billingService.js";
 
- import { showAlert } from "../components/Alert.js";
-import { renderBillingTable } from "../components/BillingTable.js";
-import { resetForm, fillForm } from "../components/BillingForm.js";
+import { showAlert } from "../components/Alert.js";
+import { renderBillingTable } from "../components/Table/BillingTable.js";
+import { resetForm, fillForm } from "../components/Form/BillingForm.js";
 
 import { setState, getState } from "../state/store.js";
 import { $, createElement } from "../utils/dom.js";
@@ -32,6 +32,7 @@ export function initBillingController() {
       total_items: $("total_items").value.trim(), 
       amount: $("amount").value.trim()  
   };
+
     // Check the application state to see if we are currently editing an existing record
     const { editingId } = getState();
 
@@ -69,7 +70,7 @@ export async function loadBillings() {
   // Store the retrieved Billing array in the application's global state
   setState({ billings });
   // Render the fetched Billing data into the HTML table structure
-  renderStudentTable(billings);
+  renderBillingTable(billings);
 
   // Hide the spinner and show the table now that the data is loaded and displayed
   spinner.style.display = "none";

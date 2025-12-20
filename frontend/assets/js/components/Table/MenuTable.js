@@ -21,7 +21,7 @@ export function renderMenuTable(menus) {
   noMenus.style.display = "none";
 
   // Iterate over each menu object in the provided array
-  students.forEach(menu => {
+  menus.forEach(menu => {
     // Create a new table row element for the current menu
     const row = document.createElement("tr");
     row.className = "border-b"; // Add styling class (likely Tailwind CSS)
@@ -47,11 +47,11 @@ export function renderMenuTable(menus) {
 
     // Find the 'Edit' button within this specific row and attach a click handler
     // When clicked, call the editmenu function with the correct menu ID
-    row.querySelector("[data-edit]").onclick = () => editStudent(menu.id);
+    row.querySelector("[data-edit]").onclick = () => editMenu(menu.id);
     
     // Find the 'Delete' button within this specific row and attach a click handler
     // When clicked, call the deletemenuAction function with the correct menu ID
-    row.querySelector("[data-delete]").onclick = () => deleteStudentAction(menu.id);
+    row.querySelector("[data-delete]").onclick = () => deleteMenuAction(menu.id);
 
     // Append the fully constructed row to the table body
     body.appendChild(row);

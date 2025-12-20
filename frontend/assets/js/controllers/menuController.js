@@ -6,9 +6,9 @@ import {
     apiDelete 
 } from "../services/menuService.js";
 
- import { showAlert } from "../components/Alert.js";
-import { renderMenuTable } from "../components/MenuTable.js";
-import { resetForm, fillForm } from "../components/MenuForm.js";
+import { showAlert } from "../components/Alert.js";
+import { renderMenuTable } from "../components/Table/MenuTable.js";
+import { resetForm, fillForm } from "../components/Form/MenuForm.js";
 
 import { setState, getState } from "../state/store.js";
 import { $, createElement } from "../utils/dom.js";
