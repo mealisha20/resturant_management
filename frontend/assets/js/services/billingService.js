@@ -12,20 +12,20 @@ async function safeJson(res) {
 
 // Fetch all billing
 export async function apiGetAll() {
-  const res = await fetch(API_BILLINGS_URL);
+  const res = await fetch(API_URL);
   if (!res.ok) return [];
   return safeJson(res);
 }
 // Fetch one billing by ID
 export async function apiGetOne(id) {
-  const res = await fetch(`${API_BILLINGS_URL}/${id}`);
+  const res = await fetch(`${API_URL}/${id}`);
   if (!res.ok) return null;
   return safeJson(res);
 }
 
 // Create a new billing
 export function apiCreate(data) {
-  return fetch(API_BILLINGS_URL, {
+  return fetch(API_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data)

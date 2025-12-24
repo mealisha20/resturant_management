@@ -1,7 +1,7 @@
 import { initMenuController } from "../controllers/menuController.js";
 import { initBillingController } from "../controllers/billingController.js";
-import { initStaffController } from "../controllers/staffController.js";
-// Load a view into #app container
+// import { initStaffController } from "../controllers/staffController.js";
+// // Load a view into #app container
 async function loadView(path) {
   const html = await fetch(path).then(res => res.text());
   document.querySelector("#app").innerHTML = html;
@@ -15,21 +15,21 @@ export async function router() {
     await loadView("/frontend/pages/home.html");
   }
   else if (path === "/menus") {
-    await loadView("/frontend/pages/restaurant.html");
+    await loadView("/frontend/pages/menus.html");
     initMenuController();
   }
   else if (path === "/billings") {
-    await loadView("/frontend/pages/restaurant.html");
+    await loadView("/frontend/pages/billings.html");
     initBillingController();
   }
-  else if (path === "/staffs") {
-    await loadView("/frontend/pages/restaurant.html");
-    initStaffController();
-  }
+  // else if (path === "/staffs") {
+  //   await loadView("/frontend/pages/staffs.html");
+  //   initStaffController();
+  // }
 
-  else {
-    await loadView("/frontend/pages/404.html");
-  }
+  // else {
+  //   await loadView("/frontend/pages/404.html");
+  // }
 }
 
 // Make links work without page reload
