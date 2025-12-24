@@ -1,5 +1,5 @@
 // Base API URL from env.js
-const API_BILLINGS_URL = window.ENV.API_BILLINGS_URL;
+const API_URL = window.ENV.API_BILLINGS_URL;
 
 // Helper: safely parse JSON or return null
 async function safeJson(res) {
@@ -34,7 +34,7 @@ export function apiCreate(data) {
 
 // Update a billing
 export function apiUpdate(id, data) {
-  return fetch(`${API_BILLINGS_URL}/${id}`, {
+  return fetch(`${API_URL}/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data)
@@ -43,5 +43,5 @@ export function apiUpdate(id, data) {
 
 // Delete a billing
 export function apiDelete(id) {
-  return fetch(`${API_BILLINGS_URL}/${id}`, { method: "DELETE" });
+  return fetch(`${API_URL}/${id}`, { method: "DELETE" });
 }

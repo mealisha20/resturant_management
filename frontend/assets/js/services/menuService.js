@@ -1,5 +1,5 @@
 // Base API URL from env.js
-const API_MENUS_URL = window.ENV.API_MENUS_URL;
+const API_URL = window.ENV.API_MENUS_URL;
 
 // Helper: safely parse JSON or return null
 async function safeJson(res) {
