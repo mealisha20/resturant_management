@@ -28,7 +28,7 @@ export function renderMenuTable(menus) {
 
     // Populate the row with dynamic HTML content using a template literal
     row.innerHTML = `
-      <td class="px-3 py-2">${menu.no}</td>
+      <td class="px-3 py-2">${menu.id}</td>
       <td class="px-3 py-2">${menu.category}</td>
       <td class="px-3 py-2">${menu.name}</td>
       <td class="px-3 py-2">${menu.price}</td>
