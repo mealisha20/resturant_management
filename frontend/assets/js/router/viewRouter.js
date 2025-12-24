@@ -1,6 +1,6 @@
 import { initMenuController } from "../controllers/menuController.js";
 import { initBillingController } from "../controllers/billingController.js";
-// import { initStaffController } from "../controllers/staffController.js";
+import { initStaffController } from "../controllers/staffController.js";
 // // Load a view into #app container
 async function loadView(path) {
   const html = await fetch(path).then(res => res.text());
@@ -22,10 +22,10 @@ export async function router() {
     await loadView("/frontend/pages/billings.html");
     initBillingController();
   }
-  // else if (path === "/staffs") {
-  //   await loadView("/frontend/pages/staffs.html");
-  //   initStaffController();
-  // }
+  else if (path === "/staffs") {
+    await loadView("/frontend/pages/staffs.html");
+    initStaffController();
+  }
 
   // else {
   //   await loadView("/frontend/pages/404.html");

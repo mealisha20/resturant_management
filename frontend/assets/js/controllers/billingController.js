@@ -6,7 +6,7 @@ import {
     apiDelete 
 } from "../services/billingService.js";
 
-// import { showAlert } from "../components/Alert.js";
+import { showAlert } from "../components/Alert.js";
 import { renderBillingTable } from "../components/BillingTable.js";
 import { resetForm, fillForm } from "../components/BillingForm.js";
 
@@ -82,7 +82,7 @@ export async function loadBillings() {
 export async function createNewBilling(data) {
   const res = await apiCreate(data);
   if (res.ok) {
-    // showAlert("Billing added!");
+    showAlert("Billing added!");
     resetForm();
     loadBillings();
   }
@@ -102,7 +102,7 @@ export async function editBilling(id) {
 export async function updateBilling(id, data) {
   const res = await apiUpdate(id, data);
   if (res.ok) {
-    // showAlert("Updated!");
+    showAlert("Updated!");
     resetForm();
     setState({ editingId: null });
     loadBillings();
@@ -115,7 +115,7 @@ export async function deleteBillingAction(id) {
 
   const res = await apiDelete(id);
  	if (res.ok) {
-    // showAlert("Deleted!");
+    showAlert("Deleted!");
     loadBillings();
   }
 }

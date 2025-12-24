@@ -6,7 +6,7 @@ import {
     apiDelete 
 } from "../services/menuService.js";
 
-// import { showAlert } from "../components/Alert.js";
+import { showAlert } from "../components/Alert.js";
 import { renderMenuTable } from "../components/MenuTable.js";
 import { resetForm, fillForm } from "../components/MenuForm.js";
 
@@ -28,7 +28,7 @@ export function initMenuController() {
 
     // Collect data from the input fields using the custom '$' selector
     const data = {
-      category: $("category").value.trim(),   // Get name value, remove whitespace
+      Category: $("Category").value.trim(),   // Get name value, remove whitespace
       name: $("name").value.trim(), // Get email value
       price: $("price").value.trim(), // Get course value
       rating: $("rating").value.trim()    // Get year value
@@ -83,7 +83,7 @@ export async function loadMenus() {
 export async function createNewMenu(data) {
   const res = await apiCreate(data);
   if (res.ok) {
-    // showAlert("Menu added!");
+    showAlert("Menu added!");
     resetForm();
     loadMenus();
   }
@@ -103,7 +103,7 @@ export async function editMenu(id) {
 export async function updateMenu(id, data) {
   const res = await apiUpdate(id, data);
   if (res.ok) {
-    // showAlert("Updated!");
+    showAlert("Updated!");
     resetForm();
     setState({ editingId: null });
     loadMenus();
@@ -116,7 +116,7 @@ export async function deleteMenuAction(id) {
 
   const res = await apiDelete(id);
  	if (res.ok) {
-    // showAlert("Deleted!");
+    showAlert("Deleted!");
     loadMenus();
   }
 }
