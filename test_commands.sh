@@ -100,4 +100,4 @@ curl -X DELETE "https://symmetrical-space-trout-jjvrjvxw7xvr35qr5-8000.app.githu
 ##################### DB Observation Via SQLite Web
 - install https://github.com/coleifer/sqlite-web
 - pip install sqlite-web
-- sqlite_web students.db
+- sqlite_web restaurant.db
