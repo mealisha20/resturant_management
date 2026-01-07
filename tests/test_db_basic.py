@@ -66,6 +66,6 @@ class TestDatabaseBasics(unittest.TestCase):
         self.assertIn(
             "menus",
             "billings",
-            "staffs"
+            "staffs",
             tables
         )
