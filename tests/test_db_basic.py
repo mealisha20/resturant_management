@@ -42,13 +42,15 @@ class TestDatabaseBasics(unittest.TestCase):
         """
 
         # Open a connection to the SQLite database
-        conn = sqlite3.connect("students.db")
+        conn = sqlite3.connect("restaurant.db")
 
         # Create a cursor to run SQL queries
         cur = conn.cursor()
 
         # Ask SQLite for all table names
-        cur.execute("SELECT name FROM sqlite_master WHERE type='table';")
+        cur.execute("SELECT order_by FROM sqlite_billings WHERE type='table';")
+        cur.execute("SELECT name FROM sqlite_menus WHERE type='table';")
+        cur.execute("SELECT name FROM sqlite_staffs WHERE type='table';")
 
         # Extract table names into a Python list
         tables = [row[0] for row in cur.fetchall()]
@@ -63,9 +65,10 @@ class TestDatabaseBasics(unittest.TestCase):
         )
 
         # Check: expected table should exist
-        self.assertIn(
+        self.assertIn (
             "menus",
             "billings",
             "staffs",
             tables
-        )
+            
+                      )
