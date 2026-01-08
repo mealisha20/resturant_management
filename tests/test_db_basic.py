@@ -65,8 +65,6 @@ class TestDatabaseBasics(unittest.TestCase):
 
         # Check: expected table should exist
         self.assertIn(
-             "menus",
-            "billings",
-            "staffs",
+             "restaurant"
             tables
         )
