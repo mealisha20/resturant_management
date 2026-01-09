@@ -11,11 +11,13 @@ from controllers.menu import (
     
 )
 from controllers.billing import (
-    get_all_billings
-    , get_billing
-    , create_billing
-    , update_billing
-    , delete_billing
+    get_all_billing_with_menu,
+    get_all_billings,
+    get_billing, 
+    create_billing,
+    update_billing,
+    delete_billing,
+     
 )
 
 from controllers.staff import (
@@ -64,7 +66,8 @@ class restaurantRouter(BaseHTTPRequestHandler):
 
         if handle_ui_routes(self, path):
             return
-        
+        if path == "/api/billings-with-menus":
+            return get_all_billing_with_menu(self)
 # ==================================================
 # menu 
 # ==================================================
@@ -78,9 +81,10 @@ class restaurantRouter(BaseHTTPRequestHandler):
 # ==================================================
 # BILLING 
 # ==================================================
-
         if path == "/api/billings":
             return get_all_billings(self)
+        if path == "/api/billings-with-menus":
+            return get_all_billing_with_menu(self)
         
         
         if path.startswith("/api/billings/"):
@@ -151,4 +155,6 @@ class restaurantRouter(BaseHTTPRequestHandler):
     def log_message(self, format, *args):
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         print(f"[{timestamp}] [Server] {format % args}")
+        
+    
     
