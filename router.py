@@ -11,7 +11,7 @@ from controllers.menu import (
     
 )
 from controllers.billing import (
-    get_all_billing_with_menu,
+  
     get_all_billings,
     get_billing, 
     create_billing,
@@ -66,8 +66,7 @@ class restaurantRouter(BaseHTTPRequestHandler):
 
         if handle_ui_routes(self, path):
             return
-        if path == "/api/billings-with-menus":
-            return get_all_billing_with_menu(self)
+       
 # ==================================================
 # menu 
 # ==================================================
@@ -83,8 +82,6 @@ class restaurantRouter(BaseHTTPRequestHandler):
 # ==================================================
         if path == "/api/billings":
             return get_all_billings(self)
-        if path == "/api/billings-with-menus":
-            return get_all_billing_with_menu(self)
         
         
         if path.startswith("/api/billings/"):

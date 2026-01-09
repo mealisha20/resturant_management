@@ -3,8 +3,7 @@ import json
 from core.responses import send_json, send_404
 from core.request import parse_json_body
 from services.billing import (
-     service_get_all_with_menu
-    , service_get_one
+    service_get_one
     , service_create
     , service_update
     , service_delete,
@@ -34,7 +33,3 @@ def delete_billing(handler, billing_id):
 
 
 
-# 🔥 JOIN CONTROLLER
-def get_all_billing_with_menu(handler):
-    data = service_get_all_with_menu()
-    return send_json(handler, 200, data)

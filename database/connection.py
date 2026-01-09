@@ -24,11 +24,10 @@ def init_database():
             
         ) 
     """)
-
+ 
     conn.execute(""" 
          CREATE TABLE IF NOT EXISTS billings (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            menu_id  INTEGER,
             order_by TEXT,
             total_items INTEGER,
             amount INTEGER,
